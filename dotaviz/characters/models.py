@@ -1,5 +1,6 @@
 from django.db import models
 
+
 HERO_TYPE_CHOICES = (
         ('S', 'Strength'),
         ('A', 'Agility'),
@@ -10,7 +11,7 @@ HERO_TYPE_CHOICES = (
 class DotaCharacters(models.Model):
 	name = models.CharField(max_length=200)
 	hero_type = models.CharField(max_length=1, choices=HERO_TYPE_CHOICES)
-	character_img = models.ImageField(upload_to='images/')
+	character_img = models.ImageField(upload_to='images/heroes')
 
 	def __str__(self):
 		return self.name
