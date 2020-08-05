@@ -36,6 +36,20 @@ class Games(models.Model):
     heroes = models.ManyToManyField(DotaCharacters)
     region = models.CharField(max_length=1, choices=REGION_CHOICES)
     match_type = models.CharField(max_length=2, choices=GAME_MODE_CHOICES)
+    game_date = models.DateTimeField(editable=False)
 
     def __str__(self):
     	return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Games, self).save(*args, **kwargs)	
+
+# Tournaments
+class Tournaments(models.Model):
+	name = models.CharField(max_length=200)
+	game = models.ForeignKey(Games, limit_choices_to={'match_type': GAME_MODE_CHOICES[1]})
+
+	def __str__(self):
+		return self.name    
